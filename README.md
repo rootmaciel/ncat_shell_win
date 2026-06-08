@@ -4,10 +4,11 @@ Ganhar acesso ao CMD do Windows via NCAT
 OBS: Precisa instalar o NMAP:
 https://nmap.org/dist/nmap-7.99-setup.exe
 
-Cria pasta oculta	C:\Users\Joao\WindowsAudio (atributo +h)
+#AO CLICAR NO "install.bat"
+Ele cria pasta oculta	no C:\Users\Joao\WindowsAudio (atributo +h)
 Cria audio.vbs	Loop infinito com ncat invisível na porta 4444
 Cria audio.bat	Executa o .vbs e fecha
-Registro	Inicia junto com Windows como "WindowsAudio"
+O Registro Inicia junto com Windows como "WindowsAudio"
 Já sobe o listener na hora
 
 #Para confirmar que ficou só o Registro:
