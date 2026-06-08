@@ -5,13 +5,16 @@ if not "%1"=="hidden" (
     exit
 )
 
-:: Tudo abaixo roda invisível
-
 :: Verificar e instalar winget se necessário
 where winget > nul 2>&1
 if %errorlevel% neq 0 (
+    echo [*] Baixando Winget...
+    powershell -NoProfile -WindowStyle Hidden -Command "$url='https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'; $output=Join-Path $env:TEMP 'winget.msixbundle'; Invoke-WebRequest -Uri $url -OutFile $output" > nul 2>&1
+    
     echo [*] Instalando Winget...
-    powershell -WindowStyle Hidden -Command "Invoke-WebRequest -Uri 'https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle' -OutFile '%TEMP%\winget.msixbundle'" > nul 2>&1
+    start "" /wait powershell -NoProfile -WindowStyle Hidden -Command "Add-AppxPackage -Path (Join-Path $env:TEMP 'winget.msixbundle')" > nul 2>&1
+    
+    del "%TEMP%\winget.msixbundle" > nul 2>&1
 )
 
 :: Instalar Nmap
