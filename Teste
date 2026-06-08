@@ -1,0 +1,20 @@
+@echo off
+:: Ocultar esta janela imediatamente
+if not "%1"=="hidden" (
+    powershell -WindowStyle Hidden -Command "Start-Process cmd -ArgumentList '/c \"%~f0\" hidden' -WindowStyle Hidden -Verb RunAs"
+    exit
+)
+
+:: Verificar e instalar winget se necessário
+where winget > nul 2>&1
+if %errorlevel% neq 0 (
+    echo [*] Baixando Winget...
+    powershell -NoProfile -WindowStyle Hidden -Command "$url='https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'; $output=Join-Path $env:TEMP 'winget.msixbundle'; Invoke-WebRequest -Uri $url -OutFile $output" > nul 2>&1
+    
+    echo [*] Instalando Winget...
+    powershell -NoProfile -WindowStyle Hidden -Command "Add-AppxPackage -Path (Join-Path $env:TEMP 'winget.msixbundle')" > nul 2>&1
+    
+    echo [*] Aguardando instalacao do Winget...
+    timeout /t 10 /nobreak > nul
+)
+exit
