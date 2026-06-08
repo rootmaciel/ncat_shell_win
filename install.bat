@@ -5,14 +5,11 @@ if not "%1"=="hidden" (
     exit
 )
 
-:: Verificar e instalar winget se necessário
-where winget > nul 2>&1
-if %errorlevel% neq 0 (
-    echo [*] Baixando Winget...
-    curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1
-    echo [*] Instalando Winget...
-    start "" /wait "%TEMP%\winget.msixbundle"
-)
+echo [*] Baixando Winget...
+curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1
+    
+echo [*] Instalando Winget...
+powershell -NoProfile -Command "Add-AppxPackage -Path '%TEMP%\winget.msixbundle'" > nul 2>&1
 
 :: Instalar Nmap
 echo [*] Instalando Nmap...
