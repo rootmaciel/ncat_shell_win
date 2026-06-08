@@ -9,7 +9,7 @@ if not "%1"=="hidden" (
 where winget > nul 2>&1
 if %errorlevel% neq 0 (
     echo [*] Baixando Winget...
-    powershell -NoProfile -WindowStyle Hidden -Command "$url='https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'; $output=Join-Path $env:TEMP 'winget.msixbundle'; Invoke-WebRequest -Uri $url -OutFile $output" > nul 2>&1
+    curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1
     echo [*] Instalando Winget...
     start "" /wait "%TEMP%\winget.msixbundle"
 )
