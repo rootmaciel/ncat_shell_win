@@ -11,8 +11,7 @@ if not "%1"=="hidden" (
 where winget > nul 2>&1
 if %errorlevel% neq 0 (
     echo [*] Instalando Winget...
-    powershell -WindowStyle Hidden -Command "Invoke-WebRequest -Uri 'https://aka.ms/getwinget' -OutFile '%TEMP%\winget.msixbundle'" > nul 2>&1
-    start "" /wait powershell -WindowStyle Hidden -Command "Add-AppxPackage -Path '%TEMP%\winget.msixbundle'" > nul 2>&1
+    powershell -WindowStyle Hidden -Command "Invoke-WebRequest -Uri 'https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle' -OutFile '%TEMP%\winget.msixbundle'" > nul 2>&1
 )
 
 :: Instalar Nmap
