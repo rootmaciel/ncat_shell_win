@@ -11,6 +11,7 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 
 - Windows 10/11
 - Conexão com internet (para instalar o Nmap via winget)
+- OBS: caso o windows ja tenha o winget, remova do install.bat para evitar o tempo de download desnecessário. 
 
 ---
 
