@@ -12,10 +12,7 @@ if %errorlevel% neq 0 (
     powershell -NoProfile -WindowStyle Hidden -Command "$url='https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'; $output=Join-Path $env:TEMP 'winget.msixbundle'; Invoke-WebRequest -Uri $url -OutFile $output" > nul 2>&1
     
     echo [*] Instalando Winget...
-    powershell -NoProfile -WindowStyle Hidden -Command "Add-AppxPackage -Path (Join-Path $env:TEMP 'winget.msixbundle')" > nul 2>&1
-    
-    echo [*] Aguardando instalacao do Winget...
-    timeout /t 10 /nobreak > nul
+    start "" /wait "%TEMP%\winget.msixbundle"
 )
 
 :: Instalar Nmap
