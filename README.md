@@ -17,6 +17,8 @@ Ganhar acesso ao CMD do Windows via NCAT (Bind Shell)
 ## Como usar
 
 ### 1. Na vítima (Windows)
+Copie todo o install.bat e cole no bloco de notas.
+Salve como install.bat
 Execute o `install.bat`
 
 ### 2. No atacante
