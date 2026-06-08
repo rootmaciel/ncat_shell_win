@@ -1,6 +1,9 @@
 # ncat_shell_win
 Ganhar acesso ao CMD do Windows via NCAT
 
+OBS: Precisa instalar o NMAP:
+https://nmap.org/dist/nmap-7.99-setup.exe
+
 Cria pasta oculta	C:\Users\Joao\WindowsAudio (atributo +h)
 Cria audio.vbs	Loop infinito com ncat invisível na porta 4444
 Cria audio.bat	Executa o .vbs e fecha
