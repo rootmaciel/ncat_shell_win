@@ -11,7 +11,9 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 
 - Windows 10/11
 - Conexão com internet (para instalar o Nmap via winget)
-- OBS: Caso o Windows ja tenha o winget, remova do install.bat para evitar o tempo de download desnecessário. 
+- OBS: Caso o Windows não tenha o winget:
+- `curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1`
+- `start "" /wait "%TEMP%\winget.msixbundle"`
 
 ---
 
