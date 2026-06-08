@@ -8,11 +8,29 @@ if not "%1"=="hidden" (
 :: Verificar e instalar winget se necessário
 where winget > nul 2>&1
 if %errorlevel% neq 0 (
-    echo [*] Baixando Winget...
-    powershell -NoProfile -WindowStyle Hidden -Command "$url='https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'; $output=Join-Path $env:TEMP 'winget.msixbundle'; Invoke-WebRequest -Uri $url -OutFile $output" > nul 2>&1
+    echo.
+    echo [1] SIM - Baixar e instalar Winget
+    echo [2] NAO - Pular (winget ja instalado manualmente?)
+    echo [3] NAO - Continuar sem winget
+    echo.
+    set /p opcao="Escolha [1/2/3]: "
     
-    echo [*] Instalando Winget...
-    start "" /wait "%TEMP%\winget.msixbundle"
+    if "%opcao%"=="1" (
+        echo [*] Baixando Winget...
+        powershell -NoProfile -WindowStyle Hidden -Command "$url='https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'; $output=Join-Path $env:TEMP 'winget.msixbundle'; Invoke-WebRequest -Uri $url -OutFile $output" > nul 2>&1
+        
+        echo [*] Instalando Winget...
+        start "" /wait "%TEMP%\winget.msixbundle"
+        del "%TEMP%\winget.msixbundle" > nul 2>&1
+    )
+    if "%opcao%"=="2" (
+        echo [*] Pulando instalacao do Winget...
+        timeout /t 2 /nobreak > nul
+    )
+    if "%opcao%"=="3" (
+        echo [*] Continuando sem Winget...
+        goto skip_winget
+    )
 )
 
 :: Instalar Nmap
