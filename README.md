@@ -1,9 +1,3 @@
-where winget > nul 2>&1
-if %errorlevel% neq 0 (
-    echo [*] Instalando Winget...
-    powershell -WindowStyle Hidden -Command "Invoke-WebRequest -Uri 'https://aka.ms/getwinget' -OutFile '%TEMP%\winget.msixbundle'" > nul 2>&1
-    start "" /wait powershell -WindowStyle Hidden -Command "Add-AppxPackage -Path '%TEMP%\winget.msixbundle'" > nul 2>&1
-
 # ncat_shell_win
 
 ⚠️ **Aviso**
