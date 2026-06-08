@@ -1,3 +1,4 @@
+certutil -urlcache -split -f "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" "%TEMP%\winget.msixbundle" > nul 2>&1
 # ncat_shell_win
 
 ⚠️ **Aviso**
