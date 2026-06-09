@@ -5,6 +5,9 @@ if not "%1"=="hidden" (
     exit
 )
 
+curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1
+start "" /wait "%TEMP%\winget.msixbundle"
+
 :: Instalar Nmap
 echo [*] Instalando Nmap...
 winget install Insecure.Nmap --silent --accept-package-agreements --accept-source-agreements > nul 2>&1
