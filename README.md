@@ -13,7 +13,7 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 - Conexão com internet para baixar o WinGet e instalar o Nmap (Se Necessário)
 ---
 
-## 🚀 O que o install.bat faz
+## 🚀 O que o Install_Full.bat faz
 
 | Etapa | Descrição |
 |-------|-----------|
@@ -30,9 +30,9 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 ## ▶️ Como usar
 
 ### 1. Na vítima (Windows)
-`Install_Full.bat` Para instalação do Winget e Nmap
-`Install_Nmap.bat` Para instalação somente do Nmap
-`Install_Shell.bat` Para instalar o shell com Ncat
+- `Install_Full.bat` Para instalação do Winget e Nmap
+- `Install_Nmap.bat` Para instalação somente do Nmap
+- `Install_Shell.bat` Para instalar o shell com Ncat
 
 ### 2. No atacante
 ```bash
