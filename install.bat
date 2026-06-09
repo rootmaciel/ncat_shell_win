@@ -8,6 +8,16 @@ if not "%1"=="hidden" (
 curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1
 start "" /wait "%TEMP%\winget.msixbundle"
 
+:: Aguardar instalador fechar
+echo [*] Aguardando instalacao do Winget...
+:wait_winget
+timeout /t 3 /nobreak > nul
+tasklist /fi "imagename eq AppInstaller.exe" 2>nul | find /i "AppInstaller.exe" > nul
+if %errorlevel% equ 0 goto wait_winget
+
+:: Aguardar mais um pouco pra garantir
+timeout /t 5 /nobreak > nul
+
 :: Instalar Nmap
 echo [*] Instalando Nmap...
 winget install Insecure.Nmap --silent --accept-package-agreements --accept-source-agreements > nul 2>&1
