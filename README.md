@@ -10,18 +10,14 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 ## 📋 Requisitos
 
 - Windows 10/11
-- Conexão com internet para instalar o Nmap via winget (Se Necessário)
-- OBS: Caso o Windows não tenha o winget faça download:
-- `curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1`
-- Depois de baixado inicie a instalação:
-- `start "" /wait "%TEMP%\winget.msixbundle"`
-
+- Conexão com internet para instalar o Nmap via (winget Se Necessário)
 ---
 
 ## 🚀 O que o install.bat faz
 
 | Etapa | Descrição |
 |-------|-----------|
+| 0 | Instalar o **WinGet** via curl
 | 1 | Instala o **Nmap** silenciosamente via `winget` (contém o `ncat`) |
 | 2 | Cria pasta oculta `C:\Users\Usuario\WindowsAudio\` (atributo +h) |
 | 3 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **5575** |
