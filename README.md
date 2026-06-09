@@ -30,9 +30,9 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 ## ▶️ Como usar
 
 ### 1. Na vítima (Windows)
-- `Install_Full.bat` Para instalação do Winget e Nmap
-- `Install_Nmap.bat` Para instalação somente do Nmap
-- `Install_Shell.bat` Para instalar o shell com Ncat
+- `Install_Full.bat` Para Windows 10 recem instalado, somente com Windows Defender padrão)
+- `Install_Nmap.bat` Para Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão
+- `Install_Shell.bat` Para Windows 10/11 já com winget e nmap, pode ter antivirus instalado, não detecta.
 
 ### 2. No atacante
 ```bash
