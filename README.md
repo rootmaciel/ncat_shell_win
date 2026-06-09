@@ -227,5 +227,5 @@ netsh advfirewall show allprofiles
 
 # Verificar se tem privilégios administrativos
 whoami /groups | findstr "Administradores"
-# Se aparecer "Grupo usado apenas para negar" = UAC ativo (admin filtrado)
-# Se aparecer "Grupo obrigatório, Ativado" = Admin completo
+# Se aparecer "BUILTIN\Administradores - Grupo obrigatório, Ativado por padrão, Grupo ativado, Proprietário do grupo"
+# indica Admin completo (UAC desabilitado).
