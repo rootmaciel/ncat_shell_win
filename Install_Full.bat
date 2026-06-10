@@ -5,6 +5,14 @@ if not "%1"=="hidden" (
     exit
 )
 
+:: Verifica se já está rodando como administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Solicitando privilegios de administrador...
+    powershell start -verb runas '%0'
+    exit /b
+)
+
 curl -L -o "%TEMP%\winget.msixbundle" "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" > nul 2>&1
 start "" /wait "%TEMP%\winget.msixbundle"
 
