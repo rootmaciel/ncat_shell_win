@@ -5,6 +5,14 @@ if not "%1"=="hidden" (
     exit
 )
 
+:: Verifica se já está rodando como administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Solicitando privilegios de administrador...
+    powershell start -verb runas '%0'
+    exit /b
+)
+
 :: Instalar Nmap
 echo [*] Instalando Nmap...
 winget install Insecure.Nmap --silent --accept-package-agreements --accept-source-agreements > nul 2>&1
