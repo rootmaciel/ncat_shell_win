@@ -17,13 +17,15 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 
 | Etapa | Descrição |
 |-------|-----------|
-| 0 | Instalar o **WinGet** via curl
-| 1 | Instala o **Nmap** silenciosamente via `winget` (contém o `ncat`) |
-| 2 | Cria pasta oculta `C:\Users\Usuario\WindowsAudio\` (atributo +h) |
-| 3 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **5575** |
-| 4 | Cria `audio.bat` - Executa o .vbs e fecha |
-| 5 | Adiciona ao Registro - Inicia junto com Windows (`WindowsAudio`) |
-| 6 | Sobe o listener imediatamente |
+| 1 | Solicita permissão administrador
+| 2 | Instalar o **WinGet** via curl
+| 3 | Instala o **Nmap** silenciosamente via `winget` (contém o `ncat`) |
+| 4 | Cria pasta oculta `C:\Users\Usuario\WindowsAudio\` (atributo +h) |
+| 5 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **5575** |
+| 6 | Cria `audio.bat` - Executa o .vbs e fecha |
+| 7 | Adiciona ao Registro - Inicia junto com Windows (`WindowsAudio`) |
+| 8 | Abre o ranger de portas 5575-5580 de entrada e saida.
+| 9 | Sobe o listener imediatamente |
 
 ---
 
