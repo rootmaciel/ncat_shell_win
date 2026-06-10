@@ -35,7 +35,7 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 - `Install_Nmap.bat` Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão (Shell Persistente)
   
 - `Install_Shell.bat` Windows 10/11 já com winget sem nmap, pode ter antivirus instalado, não detecta.
-OBS: Após executar o `Install_Shell.ba` e obter acesso à shell, recomenda-se copiar e colar imediatamente todo o conteúdo do arquivo `Persistência.txt` para manter uma shell persistente.
+OBS: Após executar o Install_Shell.bat e obter acesso à shell, recomenda-se copiar e colar imediatamente todo o conteúdo do arquivo `Persistência.txt` para manter uma shell persistente.
 
 ### 2. No atacante
 ```bash
