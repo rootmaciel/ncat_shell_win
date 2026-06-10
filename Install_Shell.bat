@@ -1,4 +1,5 @@
 @echo off
+:: Ocultar esta janela imediatamente
 if not "%1"=="hidden" (
     powershell -WindowStyle Hidden -Command "Start-Process cmd -ArgumentList '/c \"%~f0\" hidden' -WindowStyle Hidden"
     exit
