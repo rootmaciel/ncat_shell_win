@@ -204,7 +204,8 @@ python3 decode_users_pass.py
 ### 5. Elevação de Privilégio (Desabilitar UAC)
 
 ⚠️ **Aviso** O uso indevido é de total responsabilidade do usuário.
-Se você executou o `Install_Shell.bat`, copiou e colou todo o script do `Persistência.txt` seu Shell ja é administrador
+
+⚠️ **Se você executou o `Install_Shell.bat`, copiou e colou todo o script do `Persistência.txt` seu Shell ja é administrador**
 
 **Atenção:** Esta técnica requer interação do usuário (pop-up UAC) e reinicialização do sistema.
 
