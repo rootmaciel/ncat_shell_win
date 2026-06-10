@@ -240,3 +240,7 @@ Execute:
 ```bash
 python3 decode_users_pass.py
 ```
+
+### 6. Descobrir a resolução da tela
+
+
