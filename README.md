@@ -235,3 +235,8 @@ netsh advfirewall show allprofiles
 whoami /groups | findstr "Administradores"
 # Se aparecer "BUILTIN\Administradores - Grupo obrigatório, Ativado por padrão, Grupo ativado, Proprietário do grupo"
 # indica Admin completo (UAC desabilitado).
+
+Execute:
+```bash
+python3 decode_users_pass.py
+```
