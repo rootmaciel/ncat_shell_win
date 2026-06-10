@@ -241,6 +241,20 @@ Execute:
 python3 decode_users_pass.py
 ```
 
-### 6. Descobrir a resolução da tela
+### 6. Display do Windows
 
+**Descobri a resolução da tela:**
+```cmd
+wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution
+```
 
+**Descobrir a posição do mouse:**
+```cmd
+powershell -command "& {Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.Cursor]::Position}"
+```
+
+**Mover o mouse para outra posição e dar um clique:**
+**OBS: copie o valor y e x da posição do mouse e altere no código abaixo, para onde deseja clicar.**
+```cmd
+powershell -command "Add-Type -AssemblyName System.Windows.Forms; $code='using System; using System.Runtime.InteropServices; public class MouseClick { [DllImport(\"user32.dll\")] public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo); }'; Add-Type $code; [System.Windows.Forms.Cursor]::Position=New-Object System.Drawing.Point(499,491); Start-Sleep -Milliseconds 100; [MouseClick]::mouse_event(2,0,0,0,[UIntPtr]::Zero); [MouseClick]::mouse_event(4,0,0,0,[UIntPtr]::Zero)"
+```
