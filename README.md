@@ -254,7 +254,8 @@ powershell -command "& {Add-Type -AssemblyName System.Windows.Forms; [System.Win
 ```
 
 **Mover o mouse para outra posição e dar um clique:**
-**OBS: copie o valor y e x da posição do mouse e altere no código abaixo, para onde deseja clicar.**
+
+**OBS: copie o valor y e x da posição do mouse e altere no código abaixo na parte System.Drawing.Point(499,491); para onde deseja clicar.**
 ```cmd
 powershell -command "Add-Type -AssemblyName System.Windows.Forms; $code='using System; using System.Runtime.InteropServices; public class MouseClick { [DllImport(\"user32.dll\")] public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo); }'; Add-Type $code; [System.Windows.Forms.Cursor]::Position=New-Object System.Drawing.Point(499,491); Start-Sleep -Milliseconds 100; [MouseClick]::mouse_event(2,0,0,0,[UIntPtr]::Zero); [MouseClick]::mouse_event(4,0,0,0,[UIntPtr]::Zero)"
 ```
