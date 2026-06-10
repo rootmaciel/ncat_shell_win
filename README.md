@@ -44,7 +44,6 @@ ncat IP_DA_VITIMA 5575
 
 # Linux (via nc ou ncat)
 nc IP_DA_VITIMA 5575
-ncat IP_DA_VITIMA 5575
 ```
 
 ---
