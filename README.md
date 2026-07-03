@@ -1,9 +1,9 @@
-# 🖥️ Shell Windows Promt de Comando
+# 🖥️ Shell Reverso - Windows Promt de Comando
 
 ⚠️ **Aviso**
 Este projeto é apenas para **fins educacionais e testes autorizados**. O uso indevido é de total responsabilidade do usuário.
 
-Bind Shell persistente no Windows via NCAT (Nmap).
+Bind Shell reverse persistente no Windows via NCAT (Nmap).
 
 ---
 
@@ -21,10 +21,10 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 | 2 | Instalar o **WinGet** via curl
 | 3 | Instala o **Nmap** silenciosamente via `winget` (contém o `ncat`) |
 | 4 | Cria pasta oculta `C:\Users\Usuario\WindowsAudio\` (atributo +h) |
-| 5 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **5575** |
+| 5 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **65534** |
 | 6 | Cria `audio.bat` - Executa o .vbs e fecha |
 | 7 | Adiciona ao Registro - Inicia junto com Windows (`WindowsAudio`) |
-| 8 | Abre a porta 5575 de entrada e saida.
+| 8 | Abre a porta 65534 na saida.
 | 9 | Sobe o listener imediatamente |
 
 ---
@@ -36,7 +36,7 @@ Bind Shell persistente no Windows via NCAT (Nmap).
   
 - `Install_Nmap_Reverse.bat` Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão (Shell Reverse Persistente)
   
-- `Install_Shell_Reverse.bat` Windows 10/11 já com winget sem nmap, pode ter antivirus instalado, não detecta.
+- `Install_Shell_Reverse.bat` Windows 10/11 já com winget, sem nmap, pode ter antivirus instalado, não detecta.
 OBS: Após executar o Install_Shell_Reverse.bat e obter acesso à shell, recomenda-se copiar e colar imediatamente todo o conteúdo do arquivo `Persistência.txt` para manter uma shell persistente.
 
 ### 2. No atacante
