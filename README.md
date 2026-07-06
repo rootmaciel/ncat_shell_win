@@ -32,12 +32,12 @@ Bind Shell reverse persistente no Windows via NCAT (Nmap).
 ## ▶️ Como usar
 
 ### 1. Na vítima (Windows)
-- `Install_Full_Reverse.bat` Windows 10 recem instalado, somente com Windows Defender padrão (Shell Reverse Persistente)
+- `Install_Full.bat` Windows 10 recem instalado, somente com Windows Defender padrão (Shell Persistente)
   
-- `Install_Nmap_Reverse.bat` Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão (Shell Reverse Persistente)
+- `Install_Nmap.bat` Windows 10/11 já com winget, sem nmap, somente com Windows Defender padrão (Shell Persistente)
   
-- `Install_Shell_Reverse.bat` Windows 10/11 já com winget, sem nmap, pode ter antivirus instalado, não detecta.
-OBS: Após executar o Install_Shell_Reverse.bat e obter acesso à shell, recomenda-se copiar e colar imediatamente todo o conteúdo do arquivo `Persistência.txt` para manter uma shell persistente.
+- `Install_Shell.bat` Windows 10/11 já com winget, sem nmap, pode ter antivirus instalado, não detecta.
+OBS: Após executar o Install_Shell.bat e obter acesso à shell, recomenda-se copiar e colar imediatamente todo o conteúdo do arquivo `Persistência.txt` para manter uma shell persistente.
 
 ### 2. No atacante
 ```bash
