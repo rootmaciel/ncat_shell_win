@@ -121,7 +121,10 @@ findstr /i "http" "%APPDATA%\Mozilla\Firefox\Profiles\*.default-release\places.s
 ```cmd
 cd "%USERPROFILE%\AppData\Local\Google\Chrome\User Data\Default
 type "Login Data"
+
+cd "%USERPROFILE%\AppData\Local\Google\Chrome\User Data
 type "Local State"
+```
 
 ### 2. Instalar dependência no Linux
 ```bash
