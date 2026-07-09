@@ -124,7 +124,7 @@ type "Login Data"
 type "Local State"
 
 ### 2. Instalar dependência no Linux
-```bash
+```cmd
 pip install pycryptodomex --break-system-packages
 ```
 ---
