@@ -127,6 +127,7 @@ type "Local State"
 ```bash
 pip install pycryptodomex --break-system-packages
 ```
+---
 
 ### 3. Script Python para extrair senhas
 
