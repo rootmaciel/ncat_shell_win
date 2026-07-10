@@ -69,6 +69,17 @@ rmdir /s /q "%USERPROFILE%\WindowsAudio"
 
 ---
 
+### ⚠️ Desabilitar Bitdefender (completo)
+```cmd
+net stop "Bitdefender Virus Shield" /y
+net stop "Bitdefender Desktop Update Service" /y
+net stop "BitDefender Safebox" /y
+sc config "Bitdefender Virus Shield" start= disabled
+sc config "Bitdefender Desktop Update Service" start= disabled
+taskkill /f /im bdagent.exe 2>nul
+taskkill /f /im bdredline.exe 2>nul
+```
+
 ## 📡 Transferir arquivos
 
 ### Enviar arquivo do Linux para o Windows
