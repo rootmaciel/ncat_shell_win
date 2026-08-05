@@ -364,7 +364,7 @@ rm master_keys.zip
 ```
 
 ### 6.5 Crie nova pasta e mova os seguintes arquivos exemplo
-### (https://github.com/gentilkiwi/mimikatz/releases/download/2.2.0-20220919/mimikatz_trunk.zip )
+(https://github.com/gentilkiwi/mimikatz/releases/download/2.2.0-20220919/mimikatz_trunk.zip )
 ### Jogue os 3 arquivos abaixo dentro da pasta x64 do mimikatz
 
 ``` cmd
