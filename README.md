@@ -375,5 +375,3 @@ C:\Users\maciel\Desktop\decrypt\
 └── S-1-5-21-773915915-3807088668-3152298174-1001\
     └── 8427e0e4-56bc-4dc2-a061-73ba5b516e24  ← Master Key
 ```
-
-### 7.0. AGORA É COM VOCÊ USE (MIMIKTZ) github.com/gentilkiwi/mimikatz
